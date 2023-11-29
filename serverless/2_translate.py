@@ -32,3 +32,5 @@ response = translate.translate_text(
     Text=long_text, SourceLanguageCode="auto", TargetLanguageCode="de"
 )
 print(response["TranslatedText"])
+
+# %%

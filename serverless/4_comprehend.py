@@ -47,3 +47,5 @@ for text in texts:
 # ## Key Phrase Detection
 for text in texts:
     print(comprehend.detect_key_phrases(Text=text, LanguageCode="en"))
+
+# %%

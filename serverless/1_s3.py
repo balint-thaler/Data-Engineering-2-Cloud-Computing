@@ -21,7 +21,7 @@ import random
 import string
 
 # !! CHANGE THIS:
-my_name = "add-your-name-here-3"  # !! Replace with your name
+my_name = "balints-bucket"  # !! Replace with your name
 # !!
 
 random_part = "".join(random.choices(string.digits, k=3))
@@ -89,3 +89,5 @@ import os
 
 os.remove("my_content.txt")
 os.remove("my_content_downloaded.txt")
+
+# %%

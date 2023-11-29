@@ -21,8 +21,12 @@ if response.status_code != 200:
 # Parsing the HTML content
 webpage = BeautifulSoup(response.content, "html.parser")
 # Using CSS selectors to scrape the section
-description_html = webpage.select(".article__content")
+description_html = webpage.select(".paragraph")
+description_html[0].get_text().strip()
+# %% 
 texts = [text.get_text().strip() for text in description_html]
 text = "\n".join(texts)
 
 print(text)
+
+# %%
