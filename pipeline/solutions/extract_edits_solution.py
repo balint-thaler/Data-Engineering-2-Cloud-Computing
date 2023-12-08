@@ -100,15 +100,15 @@ print(raw_edits_file)
 res = s3.upload_file(
     raw_edits_file,
     S3_WIKI_BUCKET,
-    f"datalake/raw/raw-edits-{date.strftime('%Y-%m-%d')}.txt",
+    f"datalake/raw/raw-views-{date.strftime('%Y-%m-%d')}.txt",
 )
 print(
-    f"Uploaded raw edits to s3://{S3_WIKI_BUCKET}/datalake/raw/raw-edits-{date.strftime('%Y-%m-%d')}.txt"
+    f"Uploaded raw edits to s3://{S3_WIKI_BUCKET}/datalake/raw/raw-views-{date.strftime('%Y-%m-%d')}.txt"
 )
 
 assert s3.head_object(
     Bucket=S3_WIKI_BUCKET,
-    Key=f"/datalake/raw/raw-edits-{date.strftime('%Y-%m-%d')}.txt",
+    Key=f"/datalake/raw/raw-views-{date.strftime('%Y-%m-%d')}.txt",
 )
 
 # END OF LAB
@@ -150,4 +150,6 @@ s3.upload_file(
 print(
     f"Uploaded JSON lines to s3://{S3_WIKI_BUCKET}/datalake/bronze_edits/{json_lines_filename}"
 )
+# %%
+print(date)
 # %%

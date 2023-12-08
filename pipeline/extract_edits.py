@@ -8,7 +8,7 @@ import boto3
 import requests
 
 # SUBJECT DATE ### TRY A FEW OF THIS IN CLASS - INSTRUCTONS WILL COME FROM THE INSTRUCTOR
-DATE_PARAM = "2023-10-25"
+DATE_PARAM = "2023-10-27"
 
 date = datetime.datetime.strptime(DATE_PARAM, "%Y-%m-%d")
 
@@ -54,7 +54,9 @@ print(f"Created directory {RAW_LOCATION_BASE}")
 # Save the contents of `wiki_response_body` to file called `raw-edits-YYYY-MM-DD.txt` into the folder
 # in variable `RAW_LOCATION_BASE` defined
 # i.e: `data/raw-edits/raw-edits-2021-10-01.txt`.
-
+filename = f"raw-edits-"+DATE_PARAM+".txt"
+with open(filename, "w") as file:
+    file.write(wiki_response_body)
 
 # Saving the contents of `wiki_response_body` to a file
 # The file is named in the format `raw-edits-YYYY-MM-DD.txt` and saved in the folder defined in `RAW_LOCATION_BASE`
@@ -62,14 +64,28 @@ print(f"Created directory {RAW_LOCATION_BASE}")
 ## FILL IN YOUR SOLUTION HERE
 
 # %%
+raw_edits_file = RAW_LOCATION_BASE / f"raw-edits-{date.strftime('%Y-%m-%d')}.txt"
+with raw_edits_file.open("w") as file:
+    file.write(wiki_response_body)
+    print(f"Saved raw edits to {raw_edits_file}")
+
+# %%
 ########
 # LAB  #
 ########
 s3 = boto3.client("s3")
-S3_WIKI_BUCKET = ""
+S3_WIKI_BUCKET = "ceu-balint-wikidata"
+bucket_names = [bucket["Name"] for bucket in s3.list_buckets()["Buckets"]]
+# Only create the bucket if it doesn't exist
+
+if S3_WIKI_BUCKET not in bucket_names:
+    bucket_config = {"LocationConstraint": "eu-west-1"}
+    s3.create_bucket(
+        Bucket=S3_WIKI_BUCKET, CreateBucketConfiguration=bucket_config)
+    s3.upload_file(filename, S3_WIKI_BUCKET, f"datalate/raw/raw-edits-{date.strftime('%Y-%m-%d')}.txt")
 # Create a new bucket for your wikipedia pipeline
 # > A good name can be i.e. "ceu-<<your-name>>-wikidata"
-# > Store the bucket name in the varuable S3_WIKI_BUCKET
+# > Store the bucket name in the variable S3_WIKI_BUCKET
 
 ## FILL IN YOUR SOLUTION HERE
 
@@ -88,9 +104,11 @@ assert s3.list_objects(
 #   > Don't hardcode the date. Calculate it from the DATE_PARAM variable.
 # - Verify that the file is there (list the bucket in Python or on the AWS Website)
 
+location = "datalake/raw/"+filename
+s3.upload_file(filename, S3_WIKI_BUCKET, location)
 assert s3.head_object(
     Bucket=S3_WIKI_BUCKET,
-    Key=f"/datalake/raw/raw-edits-{date.strftime('%Y-%m-%d')}.txt",
+    Key=f"datalake/raw/raw-edits-{date.strftime('%Y-%m-%d')}.txt",
 )
 
 # END OF LAB
@@ -130,3 +148,5 @@ s3.upload_file(json_lines_file, S3_WIKI_BUCKET, f"datalake/edits/{json_lines_fil
 print(
     f"Uploaded JSON lines to s3://{S3_WIKI_BUCKET}/datalake/edits/{json_lines_filename}"
 )
+
+# %%
