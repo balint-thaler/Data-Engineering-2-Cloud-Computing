@@ -23,7 +23,7 @@ print("Hash of 'Hello Hashed Message 2!': " + naivehash("Hello Hashed Message 2!
 
 # %%
 # Hashing using SHA-256
-bytesstring = "My message to the world: Say Hällo to a better hash!".encode("utf-8")
+bytestring = "My message to the world: Say Hällo to a better hash!".encode("utf-8")
 print("Original message: ")
 print(bytestring)
 
@@ -35,3 +35,5 @@ print("Hash: " + hashed_message)
 
 print(f"The SHA-256 hash is {len(hashed_message)} characters long")
 print(f"Number of possible hashes: {16 ** len(hashed_message)}")
+
+# %%

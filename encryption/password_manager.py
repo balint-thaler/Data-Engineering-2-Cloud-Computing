@@ -1,5 +1,5 @@
 from typing import Any, Optional
-
+import pandas as pd
 
 def encrypt(s: str) -> str:
     """
@@ -16,10 +16,11 @@ def init_table() -> None:
     Returns empty dataframe
     @return: An empty dataframe with these columns: 'user_name' and 'password'
     """
-    pass
+    
+    return {}
 
 
-def get_encrypted_password_for_user(user_name: str) -> Optional[str]:
+def get_encrypted_password_for_user(df, user_name: str) -> Optional[str]:
     """
     Returns the encrypted password of a user.
     If no user with the specified `user_name` exists, return None
@@ -42,7 +43,11 @@ def add_or_update_user(df: Any, user_name: str, password: str) -> Any:
 
     @return: the dataframe with the new user added or the password updated
     """
-    pass
+    new_user = pd.DataFrame([user_name, password], columns = ["user_name", "password"])
+    if user_name not in df:
+        df.append(new_user)
+    else: df.loc[user_name] == password
+    return df
 
 
 def authenticate_user(df: Any, user_name: str, password: str) -> bool:
@@ -56,6 +61,9 @@ def authenticate_user(df: Any, user_name: str, password: str) -> bool:
     @return: True if the user exists and the password matches, False otherwise
     """
     pass
+
+init_table()
+add_or_update_user(user_df, "first_user", "example_password")
 
 
 if __name__ == "__main__":
