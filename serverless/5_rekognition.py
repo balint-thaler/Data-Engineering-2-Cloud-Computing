@@ -25,3 +25,9 @@ for celebrity in celebrity_response["CelebrityFaces"]:
     print(celebrity["Name"])
     print(celebrity["Urls"])
 # %%
+!pip install awscli
+# %%
+aws configure
+# %%
+~/.aws/credentials
+# %%
