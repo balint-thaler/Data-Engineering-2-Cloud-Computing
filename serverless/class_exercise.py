@@ -4,13 +4,13 @@ import pprint
 import os
 
 translate = boto3.client("translate")
-text_hun = "Ahogy minden évben, úgy idén is kiválasztotta Európa legmeghatározóbb embereit a Politico. 
-            "A lap három kategóriába sorolja a jelölteket: cselekvők, álmodozók és felforgatók – utóbbi kategóriába került idén is Orbán Viktor. 
-            "Egy helyet viszont rontott, már nem a második, csak a harmadik legnagyobb zavarkeltőnek számít Európában. 
-            "A Politico indoklása szerint Orbán Viktor 2011 óta „leépítette jogállamiságot és a médiaszabadságot, összeütközésbe került az uniós intézményekkel, túszként tartotta fogva Brüsszelt azzal, hogy a pénzszerzés érdekében vétózott, és baráti viszonyt alakított ki Vlagyimir Putyin orosz elnökkel”. 
-            "„Magyarország erős embere jó úton halad, hogy továbbra is az EU ünneprontójaként lépjen fel.” A Politico arra is figyelmeztet, hogy a 2024-es EU-elnökség alatt Orbán „túlzásba eshet”, és „a hat hónapos mandátumot arra használhatja fel, hogy az európai értékekkel ellentétes politikát támogasson”.Érdekesség, hogy tavaly csak Giorgia Meloni olasz miniszterelnök előzte meg a listán a magyar kormányfőt, aki idén pályát váltott, a „cselekvők” kategóriában került az első helyre. 
-            "Orbán Viktornál Elvira Nabiullina, az Orosz Központi Bank elnöke és Carles Puigdemont, az Európai Parlament spanyol képviselője bizonyult nagyobb felforgatónak idén. A legnagyobb álmodozó Volodimir Zelenszkij ukrán elnök, az év legbefolyásosabb embere pedig Donald Tusk, az Európai Tanács korábbi elnöke, Lengyelország volt miniszterelnöke lett, aki az októberi választás után a lengyel koalíciós kormány vezető ereje lehet. 
-            "Ebben a cikkben írtunk bővebben arról, hogy a magyar kormány számára ez nem jó hír, fontos szövetségesét veszítheti el ugyanis Orbán uniós ügyekben. A teljes ranglistát itt lehet böngészni."
+text_hun = "Ahogy minden évben, úgy idén is kiválasztotta Európa legmeghatározóbb embereit a Politico." 
+"A lap három kategóriába sorolja a jelölteket: cselekvők, álmodozók és felforgatók – utóbbi kategóriába került idén is Orbán Viktor." 
+"Egy helyet viszont rontott, már nem a második, csak a harmadik legnagyobb zavarkeltőnek számít Európában." 
+"A Politico indoklása szerint Orbán Viktor 2011 óta „leépítette jogállamiságot és a médiaszabadságot, összeütközésbe került az uniós intézményekkel, túszként tartotta fogva Brüsszelt azzal, hogy a pénzszerzés érdekében vétózott, és baráti viszonyt alakított ki Vlagyimir Putyin orosz elnökkel”." 
+"„Magyarország erős embere jó úton halad, hogy továbbra is az EU ünneprontójaként lépjen fel.” A Politico arra is figyelmeztet, hogy a 2024-es EU-elnökség alatt Orbán „túlzásba eshet”, és „a hat hónapos mandátumot arra használhatja fel, hogy az európai értékekkel ellentétes politikát támogasson”.Érdekesség, hogy tavaly csak Giorgia Meloni olasz miniszterelnök előzte meg a listán a magyar kormányfőt, aki idén pályát váltott, a „cselekvők” kategóriában került az első helyre." 
+"Orbán Viktornál Elvira Nabiullina, az Orosz Központi Bank elnöke és Carles Puigdemont, az Európai Parlament spanyol képviselője bizonyult nagyobb felforgatónak idén. A legnagyobb álmodozó Volodimir Zelenszkij ukrán elnök, az év legbefolyásosabb embere pedig Donald Tusk, az Európai Tanács korábbi elnöke, Lengyelország volt miniszterelnöke lett, aki az októberi választás után a lengyel koalíciós kormány vezető ereje lehet." 
+"Ebben a cikkben írtunk bővebben arról, hogy a magyar kormány számára ez nem jó hír, fontos szövetségesét veszítheti el ugyanis Orbán uniós ügyekben. A teljes ranglistát itt lehet böngészni."
 # %%
 text_en = translate.translate_text(
     Text=text_hun, SourceLanguageCode="hu", TargetLanguageCode="en")
@@ -20,8 +20,7 @@ print(text_en["TranslatedText"])
 # %%
 comprehend = boto3.client(service_name="comprehend", region_name="eu-west-1")
 sentiment1 = comprehend.detect_sentiment(Text=text_en["TranslatedText"], LanguageCode="en")
-sentiment0 = comprehend.detect_sentiment(Text=text_hun, LanguageCode="hu")
-print(sentiment0)
+print(sentiment1)
 # %%
 google_translate =  "As every year, Politico has selected Europe's most influential people this year as well. The paper classifies the candidates into three categories: doers, dreamers and subversives – Viktor Orbán was placed in the latter category again this year. However, he lost one place, he is no longer considered the second, but the third biggest trouble maker in Europe."
 "According to Politico's rationale, since 2011 Viktor Orbán has undermined the rule of law and media freedom, clashed with EU institutions, held Brussels hostage by vetoing in order to obtain money, and developed a friendly relationship with Russian President Vladimir Putin.Hungary's strongman is well on his way to continuing to act as the EU's party-spoiler."
